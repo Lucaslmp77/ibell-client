@@ -16,7 +16,6 @@
                 </button>
             </router-link>    
         </div>
-    
         <table class="table is-bordered is-fullwidth">
             <thead>
                 <tr>
@@ -30,32 +29,50 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for= 'item in freteList'>
-                    <th> {{ item.cadastrar }} </th>
-                    <th> 
-                        
-                        <span v-if="item.statusFrete === 'CARGA'" class="tag is-info"> Em Carga </span>
-                        <span v-if="item.statusFrete === 'EM_TRANSPORTE'" class="tag is-info"> Em Transporte </span>
-                        <span v-if="item.statusFrete === 'INTERROMPIDO'" class="tag is-warning"> Interrompido </span>
-                        <span v-if="item.statusFrete === 'DESCARGA'" class="tag is-primary"> Em Descarga </span>
-                        <span v-if="item.statusFrete === 'FATURADO'" class="tag is-success"> Faturado </span>
-                        <span v-if="item.statusFrete === 'CANCELADO'" class="tag is-danger"> Cancelado </span>
-
-                    </th>
-                    <th> {{ item.cidadeOrigem.nome }} </th>
-                    <th> {{ item.cidadeDestino.nome }} </th>
-                    <th> {{ item.caminhao.placa }} </th>
-                    <th> {{ item.produto.nome }} </th>
-                    <th>
-
-                    </th>
-                    <!-- @click="onClickPaginaDetalhar(item.id)" -->
-                    <!-- <th><button class="button is-warning is-focused">Detalhar</button></th> -->
+                <tr v-for= 'item in productList'>
+                    <th> {{ item.productName }} </th>
+                    <th> {{ item.code }} </th>
+                    <th> {{ item.unitMeasure }} </th>
+                    <th> {{ item.quantity }} </th>
+                    <th> {{ item.unitValue }} </th>
+                    <th> {{ item.profitPercentage }} </th>
+                    <th> {{ item.provider.name }} </th>
                 </tr>
             </tbody>
         </table>
     </div>
 </template>
+
+<script lang="ts">
+    import { Component, Vue } from 'vue-property-decorator';
+    import { RouterLink } from "vue-router";
+    import { ProductClient } from '@/client/Product.client';
+    import { Product } from '@/model/Product';
+    
+
+    @Component
+    export default class ProductListView extends Vue {
+
+        private productClient: ProductClient = new ProductClient()
+        public productList: Product[] = []
+        public product: Product = new Product()
+
+        public mounted(): void{
+            this.listarProdutos()
+        }
+
+        private listarProdutos(): void{
+            this.productClient.listAll().then(
+                success => {
+                    this.productList = success
+                },
+                error => {
+                    console.log(error)
+                }
+            )
+        }
+    }
+</script>
 
 <style scoped lang="scss">
     .columns {
@@ -80,13 +97,3 @@
         padding: 15px;
     }
 </style>
-
-<script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator'
-
-    @Component
-    export default class ProductListView extends Vue {
-
-    }
-
-</script>
