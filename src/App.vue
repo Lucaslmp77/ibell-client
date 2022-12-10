@@ -16,9 +16,7 @@
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
           <router-link to ='/'>
-            <a class="navbar-item">
               Produtos
-            </a>
           </router-link> 
 
           <a class="navbar-item">
@@ -81,9 +79,9 @@
     }
 
     a {
-        font-weight: bold;
-        color: #2c3e50;
-        &.router-link-exact-active {
+      font-weight: bold;
+      color: #2c3e50;
+      &.router-link-exact-active {
         color: #42b983;
       }
     }
