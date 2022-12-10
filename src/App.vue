@@ -15,7 +15,7 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <router-link to ='/product'>
+          <router-link to ='/'>
             <a class="navbar-item">
               Produtos
             </a>
@@ -36,9 +36,7 @@
           <a class="navbar-item">
             Saida de Estoque
           </a>
-
         </div>  
-
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
