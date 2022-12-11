@@ -1,9 +1,11 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.26/vue.min.js"></script>
+
 <template>
     <div class="columns is-fullwidth">
         <h1>LISTA DE PRODUTOS</h1>
         <div class="column">
             <p class="control">
-                <input class="input" type="text" placeholder="Pesquise aqui...">
+                <input class="input" type="text" placeholder="Pesquise aqui..." v-model="search">
             </p>
             <p class="control">
                 <button class="button is-link">
@@ -90,4 +92,11 @@
             )
         }
     }
+
+    new Vue({
+        el:"columns"
+        data:{
+            
+        }
+    })
 </script>
