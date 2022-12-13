@@ -53,6 +53,54 @@
     </div>
 </template>
 
+<script lang="ts">
+import { ClientClient } from '@/client/Client.client';
+import { Client } from '@/model/Client';
+import router from '@/router';
+import { Component, Vue } from 'vue-property-decorator';
+import { RouterLink } from "vue-router";
+
+@Component
+export default class ClientListView extends Vue {
+    private clientClient: ClientClient = new ClientClient()
+
+    public clientList: Client[] = []
+    
+    public client: Client = new Client()
+
+    public mounted(): void{
+        this.listClients()
+    }
+
+    private listClients(): void{
+        this.clientClient.findByActiveClients().then(
+            success => {
+                this.clientList = success
+            },
+            error => {
+                console.log(error)
+            }
+        )
+    }
+
+    public onClickPageUpdate(id: number) {
+        router.push({ path:`/update-client/${id}` })
+    }
+
+    public onClickDisable(id: number) {
+        this.clientClient.disable(id).then(
+            success => {
+                console.log("desativado com sucesso!!!")
+                window.location.reload()
+            },
+            error => {
+                console.log(error)
+            }
+        )
+    }
+}
+</script>
+
 <style scoped lang="scss">
     .columns {
         h1 {
@@ -102,51 +150,3 @@
         padding: 0px 50px;
     }
 </style>
-
-<script lang="ts">
-    import { ClientClient } from '@/client/Client.client';
-    import { Client } from '@/model/Client';
-    import router from '@/router';
-    import { Component, Vue } from 'vue-property-decorator';
-    import { RouterLink } from "vue-router";
-    
-    @Component
-    export default class ClientListView extends Vue {
-        private clientClient: ClientClient = new ClientClient()
-
-        public clientList: Client[] = []
-        
-        public client: Client = new Client()
-
-        public mounted(): void{
-            this.listClients()
-        }
-
-        private listClients(): void{
-            this.clientClient.findByActiveClients().then(
-                success => {
-                    this.clientList = success
-                },
-                error => {
-                    console.log(error)
-                }
-            )
-        }
-
-        public onClickPageUpdate(id: number) {
-            router.push({ path:`/update-client/${id}` })
-        }
-
-        public onClickDisable(id: number) {
-            this.clientClient.disable(id).then(
-                success => {
-                    console.log("desativado com sucesso!!!")
-                    window.location.reload()
-                },
-                error => {
-                    console.log(error)
-                }
-            )
-        }
-    }
-</script>
